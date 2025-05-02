@@ -1,4 +1,5 @@
 import numpy as np
+import pandas as pd
 from sklearn.cluster import DBSCAN
 from sklearn.metrics import silhouette_score
 from sklearn.preprocessing import StandardScaler
@@ -67,6 +68,14 @@ def plot_heatmap(results):
 
 if __name__ == "__main__":
     # Example dataset
+    '''
+    df = pd.read_csv('bank_comma.csv')
+    print(df.head())
+    df_new = df[['age', 'balance', 'day', 'duration', 'campaign', 'pdays', 'previous']]
+    df_new = df_new.dropna()
+    df_new = df_new.drop_duplicates()
+    X = df_new.copy()
+    '''
     X, _ = make_blobs(n_samples=500, centers=4, cluster_std=0.60, random_state=42)
     X = StandardScaler().fit_transform(X)
 
