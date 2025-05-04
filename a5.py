@@ -20,6 +20,8 @@ def optimize_dbscan_hyperparameters(X, eps_range, min_samples_range):
 
     for eps in eps_range:
         for min_samples in min_samples_range:
+            eps = round(eps, 2)
+            min_samples = round(min_samples, 2)
             db = DBSCAN(eps=eps, min_samples=min_samples)
             labels = db.fit_predict(X)
 
@@ -76,7 +78,7 @@ if __name__ == "__main__":
     df_new = df_new.drop_duplicates()
     X = df_new.copy()
     '''
-    X, _ = make_blobs(n_samples=500, centers=4, cluster_std=0.60, random_state=42)
+    X, _ = make_blobs(n_samples=1000, centers=4, cluster_std=0.60, random_state=42)
     X = StandardScaler().fit_transform(X)
 
     # Define parameter grid
