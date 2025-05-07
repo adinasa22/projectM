@@ -66,3 +66,14 @@ print(similarities)
 print('No Matches:')
 print(no_match)
 
+# Create output file with different tabs for result
+
+filename = 'output.xlsx'
+
+# Create output file with different tabs for result
+with pd.ExcelWriter(filename, engine='xlsxwriter') as writer:
+    exact_matches.to_excel(writer, sheet_name='Exact Matches', index=False)
+    similarities.to_excel(writer, sheet_name='Similarities', index=False)
+    no_match.to_excel(writer, sheet_name='No Matches', index=False)
+
+print("Results have been written to 'output.xlsx'")
