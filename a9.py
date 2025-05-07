@@ -33,6 +33,7 @@ def check_similarities(source1, source2, threshold=80):
         for index2, row2 in source2.iterrows():
             name_similarity = fuzz.ratio(row1['name'], row2['name'])
             address_similarity = fuzz.ratio(row1['address'], row2['address'])
+
             if name_similarity > threshold and address_similarity > threshold:
                 similarities.append({'id_source1': row1['id'], 'id_source2': row2['id'],
                                      'name_similarity': name_similarity,
