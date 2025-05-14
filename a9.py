@@ -1,4 +1,5 @@
 # python code to read data from two sources and check for exact matches and similarities
+import time
 import warnings
 import pandas as pd
 from fuzzywuzzy import fuzz
@@ -77,3 +78,47 @@ with pd.ExcelWriter(filename, engine='xlsxwriter') as writer:
     no_match.to_excel(writer, sheet_name='No Matches', index=False)
 
 print("Results have been written to 'output.xlsx'")
+
+
+
+import ollama
+
+def explain_variance(value_a, value_b, context=""):
+    if isinstance(value_a, int):
+        if isinstance(value_b, int):
+            difference = value_b - value_a
+    else:
+        difference = None
+
+    prompt = f"""
+I have two numerical values:
+
+Value A: {value_a}
+Value B: {value_b}
+
+The difference is: {difference}
+
+Context (if any): {context}
+
+Can you explain the difference and provide a possible reason for the variance? Be concise but informative.
+"""
+
+    response = ollama.chat(
+        model='mistral', # Change to the model you pulled with Ollama
+        messages=[
+            {"role": "user", "content": prompt}
+        ]
+    )
+    return response['message']['content']
+
+# Example usage
+if __name__ == "__main__":
+    start = time.perf_counter()
+    val_a = '202 Birch St'
+    val_b = '202 Birch Street'
+    context = ""
+
+    explanation = explain_variance(val_a, val_b, context)
+    print("Explanation:\n", explanation)
+    end = time.perf_counter()
+    print(f"Execution time: {end - start:.2f} seconds")
